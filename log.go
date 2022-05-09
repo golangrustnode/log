@@ -17,6 +17,10 @@ var Error=logrus.Error
 var Fatal=logrus.Fatal
 var Panic=logrus.Panic
 
+func SetLevel(level logrus.Level)  {
+	logrus.SetLevel(level)
+}
+
 func SetPanic() {
 	logrus.SetLevel(logrus.PanicLevel)
 }
