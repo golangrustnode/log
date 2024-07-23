@@ -1,2 +1,2 @@
 # log
-customize logrus 
+1. 可以通过SetPath设置日志文件路径，并将日志写入到文件中
