@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-
+pcdnro*
 # Test binary, built with `go test -c`
 *.test
 

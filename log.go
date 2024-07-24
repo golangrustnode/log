@@ -23,6 +23,12 @@ func init() {
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
 		},
 	})
+	cwd, err := os.Getwd()
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	SetPath(cwd)
 }
 
 var Trace = logrus.Trace
@@ -76,7 +82,7 @@ func SetPath(log_path string) {
 		ForceColors:     false,
 		DisableColors:   true,
 	}
-	logName := fmt.Sprintf("%s/pcdn.", log_path)
+	logName := fmt.Sprintf("%s/pcdnro.", log_path)
 	writer, _ := rotatelogs.New(logName + "%Y%m%d")
 	lfHook := lfshook.NewHook(lfshook.WriterMap{
 		logrus.InfoLevel:  writer,
