@@ -28,6 +28,7 @@ func init() {
 		fmt.Println("Error:", err)
 		return
 	}
+	fmt.Println("Current working directory:", cwd)
 	SetPath(cwd)
 }
 
