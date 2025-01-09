@@ -36,6 +36,14 @@ var Error = logrus.Error
 var Fatal = logrus.Fatal
 var Panic = logrus.Panic
 
+var Tracef = logrus.Tracef
+var Debugf = logrus.Debugf
+var Infof = logrus.Infof
+var Warnf = logrus.Warnf
+var Errorf = logrus.Errorf
+var Fatalf = logrus.Fatalf
+var Panicf = logrus.Panicf
+
 func SetLevel(level string) {
 	SetDebug()
 	l, err := logrus.ParseLevel(level)
