@@ -6,6 +6,6 @@ import (
 
 func TestSetLevel(t *testing.T) {
 	SetLevel("info")
-	Info("info level")
+	Infof("info level: %v", "fuckyou")
 	Debug("debug level")
 }
