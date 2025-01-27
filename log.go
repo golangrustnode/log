@@ -23,7 +23,7 @@ func init() {
 }
 
 func SetLogLevel() {
-	logLevel := os.Getenv("LOG_LEVEL")
+	logLevel := os.Getenv("PLOG_LEVEL")
 	level, err := logrus.ParseLevel(logLevel)
 	if err != nil {
 		logrus.SetLevel(logrus.InfoLevel) // 默认级别
