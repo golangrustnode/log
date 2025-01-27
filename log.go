@@ -32,6 +32,16 @@ func SetLogLevel() {
 	}
 }
 
+// trace debug info warn error fatal  panic
+func ChangeLogLevel(levelstr string) {
+	level, err := logrus.ParseLevel(levelstr)
+	if err != nil {
+		logrus.SetLevel(logrus.InfoLevel) // 默认级别
+	} else {
+		logrus.SetLevel(level)
+	}
+}
+
 var Trace = logrus.Trace
 var Debug = logrus.Debug
 var Info = logrus.Info
