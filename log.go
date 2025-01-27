@@ -19,6 +19,10 @@ func init() {
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
 		},
 	})
+	SetLogLevel()
+}
+
+func SetLogLevel() {
 	logLevel := os.Getenv("LOG_LEVEL")
 	level, err := logrus.ParseLevel(logLevel)
 	if err != nil {
