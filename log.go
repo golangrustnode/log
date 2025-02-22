@@ -14,7 +14,7 @@ func init() {
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
 			//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
 			//return frame.Function, fileName
-			sps := strings.Split(frame.File, "github.com")
+			sps := strings.Split(frame.File, "golangrustnode")
 			len := len(sps)
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
 		},
