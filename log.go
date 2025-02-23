@@ -1,6 +1,7 @@
 package log
 
 import (
+	"fmt"
 	"github.com/sirupsen/logrus"
 	"os"
 	"runtime"
@@ -27,6 +28,7 @@ var Fatalf = logger.Fatalf
 var Panicf = logger.Panicf
 
 func init() {
+	fmt.Println("log init")
 	logger = logrus.New()
 	Trace = logger.Trace
 	Debug = logger.Debug
