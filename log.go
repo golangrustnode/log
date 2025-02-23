@@ -11,40 +11,53 @@ import (
 
 var logger *logrus.Logger
 
-var Trace = logger.Trace
-var Debug = logger.Debug
-var Info = logger.Info
-var Warn = logger.Warn
-var Error = logger.Error
-var Fatal = logger.Fatal
-var Panic = logger.Panic
+var Trace = func(args ...interface{}) {
+	logger.Trace(args...)
+}
+var Debug = func(args ...interface{}) {
+	logger.Debug(args...)
+}
+var Info = func(args ...interface{}) {
+	logger.Info(args...)
+}
+var Warn = func(args ...interface{}) {
+	logger.Warn(args...)
+}
+var Error = func(args ...interface{}) {
+	logger.Error(args...)
+}
+var Fatal = func(args ...interface{}) {
+	logger.Fatal(args...)
+}
+var Panic = func(format string, args ...interface{}) {
+	logger.Panicf(format, args...)
+}
 
-var Tracef = logger.Tracef
-var Debugf = logger.Debugf
-var Infof = logger.Infof
-var Warnf = logger.Warnf
-var Errorf = logger.Errorf
-var Fatalf = logger.Fatalf
-var Panicf = logger.Panicf
+var Tracef = func(format string, args ...interface{}) {
+	logger.Tracef(format, args...)
+}
+var Debugf = func(format string, args ...interface{}) {
+	logger.Debugf(format, args...)
+}
+var Infof = func(format string, args ...interface{}) {
+	logger.Infof(format, args...)
+}
+var Warnf = func(format string, args ...interface{}) {
+	logger.Warnf(format, args...)
+}
+var Errorf = func(format string, args ...interface{}) {
+	logger.Errorf(format, args...)
+}
+var Fatalf = func(format string, args ...interface{}) {
+	logger.Fatalf(format, args...)
+}
+var Panicf = func(format string, args ...interface{}) {
+	logger.Panicf(format, args...)
+}
 
 func init() {
 	fmt.Println("log init")
 	logger = logrus.New()
-	Trace = logger.Trace
-	Debug = logger.Debug
-	Info = logger.Info
-	Warn = logger.Warn
-	Error = logger.Error
-	Fatal = logger.Fatal
-	Panic = logger.Panic
-
-	Tracef = logger.Tracef
-	Debugf = logger.Debugf
-	Infof = logger.Infof
-	Warnf = logger.Warnf
-	Errorf = logger.Errorf
-	Fatalf = logger.Fatalf
-	Panicf = logger.Panicf
 	logger.SetReportCaller(true)
 	logger.SetFormatter(&logrus.JSONFormatter{
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
