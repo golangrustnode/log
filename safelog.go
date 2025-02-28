@@ -3,6 +3,9 @@ package log
 import "github.com/sirupsen/logrus"
 
 func safelog(level logrus.Level, args ...interface{}) {
+	safelog2(level, args...)
+}
+func safelog2(level logrus.Level, args ...interface{}) {
 	defer func() {
 		if err := recover(); err != nil {
 			logrus.Error("log panic", err)

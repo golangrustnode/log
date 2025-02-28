@@ -61,24 +61,24 @@ func init() {
 	logrus.SetReportCaller(true)
 	logger.SetReportCaller(true)
 
-	logrus.SetFormatter(&logrus.JSONFormatter{
+	logrus.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
 			//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
 			//return frame.Function, fileName
 			sps := strings.Split(frame.File, "golangrustnode")
 			len := len(sps)
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
-		},
+		}},
 	})
 
-	logger.SetFormatter(&logrus.JSONFormatter{
+	logger.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
 			//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
 			//return frame.Function, fileName
 			sps := strings.Split(frame.File, "golangrustnode")
 			len := len(sps)
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
-		},
+		}},
 	})
 	SetLevelBYENV()
 }
