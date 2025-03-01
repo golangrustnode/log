@@ -22,6 +22,6 @@ func (f *CustomFormatter) Format(entry *logrus.Entry) ([]byte, error) {
 	fsplits := strings.Split(file, "github.com/")
 	filename := fsplits[len(fsplits)-1]
 	//Creating custom log format
-	logMessage := fmt.Sprintf("	%s:%d %s %s  \n", filename, line, logLevel, entry.Message)
+	logMessage := fmt.Sprintf("%s:%d %s %s  \n", filename, line, logLevel, entry.Message)
 	return []byte(logMessage), nil
 }
