@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"runtime"
-	"strconv"
-	"strings"
 )
 
 var logger *logrus.Logger
@@ -60,25 +58,46 @@ func init() {
 
 	logrus.SetReportCaller(true)
 	logger.SetReportCaller(true)
-
-	logrus.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
+	myjsonformatter := logrus.JSONFormatter{
+		PrettyPrint:     true, // prettify the JSON output
+		TimestampFormat: "2006-01-02 15:04:05",
+		FieldMap: logrus.FieldMap{
+			logrus.FieldKeyTime:  "@timestamp",
+			logrus.FieldKeyLevel: "@level",
+			logrus.FieldKeyMsg:   "@message",
+		},
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
-			//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
-			//return frame.Function, fileName
-			sps := strings.Split(frame.File, "golangrustnode")
-			len := len(sps)
-			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
-		}},
+			return trimFunc(frame.Function), fmt.Sprintf("%s:%d", trimPath(frame.File), frame.Line)
+		},
+	}
+	logrus.SetFormatter(&CustomFormatter{
+		JSONFormatter: myjsonformatter,
 	})
+	logger.SetFormatter(
+		&CustomFormatter{
+			JSONFormatter: myjsonformatter,
+		},
+	)
+	/*
+		logrus.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
+			CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
+				//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
+				//return frame.Function, fileName
+				sps := strings.Split(frame.File, "golangrustnode")
+				len := len(sps)
+				return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
+			}},
+		})
 
-	logger.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
-		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
-			//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
-			//return frame.Function, fileName
-			sps := strings.Split(frame.File, "golangrustnode")
-			len := len(sps)
-			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
-		}},
-	})
+		logger.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
+			CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
+				//fileName := path.Base(frame.File) + ":" + strconv.Itoa(frame.Line)
+				//return frame.Function, fileName
+				sps := strings.Split(frame.File, "golangrustnode")
+				len := len(sps)
+				return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
+			}},
+		})
+	*/
 	SetLevelBYENV()
 }
