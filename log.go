@@ -59,7 +59,7 @@ func init() {
 	logrus.SetReportCaller(true)
 	logger.SetReportCaller(true)
 	myjsonformatter := logrus.JSONFormatter{
-		PrettyPrint:     true, // prettify the JSON output
+		PrettyPrint:     false, // prettify the JSON output
 		TimestampFormat: "2006-01-02 15:04:05",
 		FieldMap: logrus.FieldMap{
 			logrus.FieldKeyTime:  "@timestamp",
