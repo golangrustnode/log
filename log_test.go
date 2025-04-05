@@ -14,5 +14,5 @@ func TestSetLevel(t *testing.T) {
 	t.Log(res)
 	t.Log(len(res))
 	Info("info log")
-	logger.Info("debug log")
+	
 }

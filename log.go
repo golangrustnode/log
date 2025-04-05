@@ -6,7 +6,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
-	"strings"
 )
 
 var logger *logrus.Logger
@@ -93,7 +92,7 @@ func init() {
 
 		},
 	}
-	myloggertextformatter := &logrus.TextFormatter{
+	/* myloggertextformatter := &logrus.TextFormatter{
 		ForceColors:            true,
 		DisableColors:          false,
 		FullTimestamp:          true, // 显示完整时间戳
@@ -107,6 +106,7 @@ func init() {
 			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
 		},
 	}
+	*/
 
 	/*myjsonformatter := logrus.JSONFormatter{
 		PrettyPrint:     false, // prettify the JSON output
@@ -121,7 +121,7 @@ func init() {
 		},
 	}*/
 	logrus.SetFormatter(mytextformatter)
-	logger.SetFormatter(myloggertextformatter)
+	logger.SetFormatter(mytextformatter)
 	/*
 		logrus.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
 			CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
