@@ -13,5 +13,6 @@ func TestSetLevel(t *testing.T) {
 	res := strings.Split("golangrustnode", "tt")
 	t.Log(res)
 	t.Log(len(res))
-	//log.Info("info log")
+	Info("info log")
+	logger.Info("debug log")
 }

@@ -3,7 +3,10 @@ package log
 import (
 	"fmt"
 	"github.com/sirupsen/logrus"
+	"path/filepath"
 	"runtime"
+	"strconv"
+	"strings"
 )
 
 var logger *logrus.Logger
@@ -58,7 +61,54 @@ func init() {
 
 	logrus.SetReportCaller(true)
 	logger.SetReportCaller(true)
-	myjsonformatter := logrus.JSONFormatter{
+	mytextformatter := &logrus.TextFormatter{
+		ForceColors:            true,
+		DisableColors:          false,
+		FullTimestamp:          true, // 显示完整时间戳
+		TimestampFormat:        "2006-01-02 15:04:05",
+		DisableLevelTruncation: true, // 禁止级别文本截断，如 WARN 不会被截断为 WRN
+		PadLevelText:           true, // 日志级别文字对齐
+		QuoteEmptyFields:       true,
+		CallerPrettyfier: func(f *runtime.Frame) (function string, file string) {
+			// 仅返回文件名（或相对路径）和行号
+			/*sps := strings.Split(frame.File, "golangrustnode/")
+			len := len(sps)
+			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)*
+			*/
+			pc := make([]uintptr, 10)
+			n := runtime.Callers(11, pc) // 调整skip数可能需要微调
+			frames := runtime.CallersFrames(pc[:n])
+
+			var frame runtime.Frame
+			more := true
+			for i := 0; i < 2 && more; i++ {
+				frame, more = frames.Next()
+			}
+
+			filename := filepath.Base(frame.File)
+			line := strconv.Itoa(frame.Line)
+			funcName := filepath.Base(frame.Function)
+
+			return funcName, filename + ":" + line
+
+		},
+	}
+	myloggertextformatter := &logrus.TextFormatter{
+		ForceColors:            true,
+		DisableColors:          false,
+		FullTimestamp:          true, // 显示完整时间戳
+		TimestampFormat:        "2006-01-02 15:04:05",
+		DisableLevelTruncation: true, // 禁止级别文本截断，如 WARN 不会被截断为 WRN
+		PadLevelText:           true, // 日志级别文字对齐
+		QuoteEmptyFields:       true,
+		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
+			sps := strings.Split(frame.File, "golangrustnode/")
+			len := len(sps)
+			return "", sps[len-1] + ":" + strconv.Itoa(frame.Line)
+		},
+	}
+
+	/*myjsonformatter := logrus.JSONFormatter{
 		PrettyPrint:     false, // prettify the JSON output
 		TimestampFormat: "2006-01-02 15:04:05",
 		FieldMap: logrus.FieldMap{
@@ -69,15 +119,9 @@ func init() {
 		CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
 			return trimFunc(frame.Function), fmt.Sprintf("%s:%d", trimPath(frame.File), frame.Line)
 		},
-	}
-	logrus.SetFormatter(&CustomFormatter{
-		JSONFormatter: myjsonformatter,
-	})
-	logger.SetFormatter(
-		&CustomFormatter{
-			JSONFormatter: myjsonformatter,
-		},
-	)
+	}*/
+	logrus.SetFormatter(mytextformatter)
+	logger.SetFormatter(myloggertextformatter)
 	/*
 		logrus.SetFormatter(&CustomFormatter{&logrus.JSONFormatter{
 			CallerPrettyfier: func(frame *runtime.Frame) (function string, file string) {
