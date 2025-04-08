@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 )
 
 var logger *logrus.Logger
@@ -83,8 +84,10 @@ func init() {
 			for i := 0; i < 2 && more; i++ {
 				frame, more = frames.Next()
 			}
-
-			filename := filepath.Base(frame.File)
+			sps := strings.Split(frame.File, "golangrustnode/")
+			len := len(sps)
+			//filename := filepath.Base(frame.File)
+			filename := sps[len-1]
 			line := strconv.Itoa(frame.Line)
 			funcName := filepath.Base(frame.Function)
 
