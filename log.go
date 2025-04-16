@@ -1,7 +1,6 @@
 package log
 
 import (
-	"fmt"
 	"github.com/sirupsen/logrus"
 	"path/filepath"
 	"runtime"
@@ -56,7 +55,7 @@ var Panicf = func(format string, args ...interface{}) {
 }
 
 func init() {
-	fmt.Println("log init")
+	//fmt.Println("log init")
 	logger = logrus.New()
 
 	logrus.SetReportCaller(true)
