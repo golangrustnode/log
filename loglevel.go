@@ -3,18 +3,25 @@ package log
 import (
 	"github.com/sirupsen/logrus"
 	"os"
+	"time"
 )
 
 func SetLevelBYENV() {
-	logLevel := os.Getenv("PLOG_LEVEL")
-	level, err := logrus.ParseLevel(logLevel)
-	if err != nil {
-		return
-	}
-	logrus.SetLevel(level)
-	if logger != nil {
-		logger.SetLevel(level)
-	}
+	go func() {
+		for {
+			logLevel := os.Getenv("PLOG_LEVEL")
+			level, err := logrus.ParseLevel(logLevel)
+			if err != nil {
+				return
+			}
+			logrus.SetLevel(level)
+			if logger != nil {
+				logger.SetLevel(level)
+			}
+			time.Sleep(10 * time.Second)
+		}
+	}()
+
 }
 
 func SetLevel(level string) {
