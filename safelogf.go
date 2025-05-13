@@ -3,11 +3,15 @@ package log
 import "github.com/sirupsen/logrus"
 
 func safelogf(level logrus.Level, format string, args ...interface{}) {
+
 	defer func() {
 		if err := recover(); err != nil {
 			logrus.Error("log panic", err)
 		}
 	}()
+	if !logrus.IsLevelEnabled(level) {
+		return
+	}
 	if logger == nil {
 		switch level {
 		case logrus.TraceLevel:
